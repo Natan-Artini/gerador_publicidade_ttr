@@ -28,7 +28,6 @@ input {
 }
 
 #background_fixed {
-  background-image: url("https://uploaddeimagens.com.br/images/004/314/626/original/base.png?1674760238");
   width: 1200px;
   height: 800px;
   position: relative;
@@ -81,37 +80,43 @@ canvas {
 </style>
 
 <script>
+  function uploadBase(){
+    var imgcanvas = document.getElementById("canv");
+    var fileinput = document.getElementById("inputBase");
+    var image = new SimpleImage(fileinput);
+    image.drawTo(imgcanvas);
+  }
+
   function upload(){
     var imgcanvas = document.getElementById("canv1");
-    var fileinput = document.getElementById("finput");
+    var fileinput = document.getElementById("input");
     var image = new SimpleImage(fileinput);
     image.drawTo(imgcanvas);
   }
 
   function setTitle() {
-    var title = document.getElementById("finputTitle");
+    var title = document.getElementById("inputTitle");
     var showTitle = document.getElementById("titulo_produto");
     showTitle.innerHTML = title.value;
   }
 
   function setDescricao() {
-    var description = document.getElementById("finputDescription");
+    var description = document.getElementById("inputDescription");
     var showDescription = document.getElementById("descricao_produto");
     showDescription.innerHTML = description.value;
   }
 
   function setDescricaoDois() {
-    var description = document.getElementById("finputDescriptionTwo");
+    var description = document.getElementById("inputDescriptionTwo");
     var showDescription = document.getElementById("descricao_produto_dois");
     showDescription.innerHTML = description.value;
   }
 
-  function teste() {
-    console.log('aqui');
+  function savePubli() {
     html2canvas(document.querySelector("#background_fixed")).then(canvas => {
-      console.log(canvas);
       canvas.toBlob(function(blob) {
-        window.saveAs(blob, 'my_image.jpg');
+        var title = document.getElementById("inputTitle");
+        window.saveAs(blob, title ? title.value : 'my_image.png');
       });
     });
   }
@@ -123,27 +128,32 @@ canvas {
 
 <div class="form">
   <div class="input-group mb-2">
-    <input type="file" class="form-control" placeholder="Produto" aria-label="Produto" multiple="false" accept="image/*" id=finput onchange="upload()">
+    <input type="file" class="form-control" placeholder="Base" aria-label="Base" multiple="false" accept="image/*" id="inputBase" onchange="uploadBase()">
   </div>
 
   <div class="input-group mb-2">
-    <input type="text" class="form-control" placeholder="Título Produto" aria-label="Título Produto" id="finputTitle" onchange="setTitle()">
+    <input type="file" class="form-control" placeholder="Produto" aria-label="Produto" multiple="false" accept="image/*" id="input" onchange="upload()">
   </div>
 
   <div class="input-group mb-2">
-    <input type="text" class="form-control" placeholder="Descrição Produto" aria-label="Descrição Produto" id="finputDescription" onchange="setDescricao()">
+    <input type="text" class="form-control" placeholder="Título Produto" aria-label="Título Produto" id="inputTitle" onchange="setTitle()">
+  </div>
+
+  <div class="input-group mb-2">
+    <input type="text" class="form-control" placeholder="Descrição Produto" aria-label="Descrição Produto" id="inputDescription" onchange="setDescricao()">
   </div>
 
   <div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Descrição Produto" aria-label="Descrição Produto" id="finputDescriptionTwo" onchange="setDescricaoDois()">
+    <input type="text" class="form-control" placeholder="Descrição Produto" aria-label="Descrição Produto" id="inputDescriptionTwo" onchange="setDescricaoDois()">
   </div>
 
-  <button class="btn btn-success mb-3" onclick="teste()">Salvar</button>
+  <button class="btn btn-success mb-3" onclick="savePubli()">Salvar</button>
 </div>
 
 
 
 <div id="background_fixed">
+  <canvas id="canv" ></canvas>
   <div class="base_canvas">
     <canvas id="canv1" ></canvas>
   </div>
