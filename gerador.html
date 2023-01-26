@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
+
+<style>
+@import url("https://fonts.googleapis.com/css?family=Dela+Gothic+One:300,400,600,700,800,900&display=swap");
+
+body{
+  margin: 25px;
+  font-family: verdana;
+}
+
+h1{
+  color: darkslategray;
+}
+
+p {
+  font-size: 12pt;
+  color: black;
+}
+
+input {
+  font-family: verdana;
+  font-size: 12pt;
+}
+
+#background_fixed {
+  background-image: url("./base.png");
+  width: 1200px;
+  height: 800px;
+  position: relative;
+}
+
+.base_canvas {
+  height: 470px;
+  width: 770px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 400px;
+  top: 170px;
+}
+
+canvas {
+  height: 100%;
+}
+
+#titulo_produto {
+  position: absolute;
+  top: 630px;
+  font-size: 48px;
+  left: 400px;
+  width: 770px;
+  text-align: center;
+  font-family: "Dela Gothic One";
+}
+
+#descricao_produto {
+  position: absolute;
+  top: 700px;
+  font-size: 24px;
+  left: 400px;
+  width: 770px;
+  text-align: center;
+  font-family: "Dela Gothic One";
+}
+
+#descricao_produto_dois {
+  position: absolute;
+  top: 725px;
+  font-size: 24px;
+  left: 400px;
+  width: 770px;
+  text-align: center;
+  font-family: "Dela Gothic One";
+}
+</style>
+
+<script>
+  function upload(){
+    var imgcanvas = document.getElementById("canv1");
+    var fileinput = document.getElementById("finput");
+    var image = new SimpleImage(fileinput);
+    image.drawTo(imgcanvas);
+  }
+
+  function setTitle() {
+    var title = document.getElementById("finputTitle");
+    var showTitle = document.getElementById("titulo_produto");
+    showTitle.innerHTML = title.value;
+  }
+
+  function setDescricao() {
+    var description = document.getElementById("finputDescription");
+    var showDescription = document.getElementById("descricao_produto");
+    showDescription.innerHTML = description.value;
+  }
+
+  function setDescricaoDois() {
+    var description = document.getElementById("finputDescriptionTwo");
+    var showDescription = document.getElementById("descricao_produto_dois");
+    showDescription.innerHTML = description.value;
+  }
+
+  function teste() {
+    console.log('aqui');
+    html2canvas(document.querySelector("#background_fixed")).then(canvas => {
+      console.log(canvas);
+      canvas.toBlob(function(blob) {
+        window.saveAs(blob, 'my_image.jpg');
+      });
+    });
+  }
+</script>
+
+<body>
+<script src="https://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js">
+</script>
+
+<div class="form">
+  <div class="input-group mb-2">
+    <input type="file" class="form-control" placeholder="Produto" aria-label="Produto" multiple="false" accept="image/*" id=finput onchange="upload()">
+  </div>
+
+  <div class="input-group mb-2">
+    <input type="text" class="form-control" placeholder="Título Produto" aria-label="Título Produto" id="finputTitle" onchange="setTitle()">
+  </div>
+
+  <div class="input-group mb-2">
+    <input type="text" class="form-control" placeholder="Descrição Produto" aria-label="Descrição Produto" id="finputDescription" onchange="setDescricao()">
+  </div>
+
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Descrição Produto" aria-label="Descrição Produto" id="finputDescriptionTwo" onchange="setDescricaoDois()">
+  </div>
+
+  <button onclick="teste()">Salvar</button>
+</div>
+
+
+
+<div id="background_fixed">
+  <div class="base_canvas">
+    <canvas id="canv1" ></canvas>
+  </div>
+  <p id="titulo_produto"></p>
+  <p id="descricao_produto"></p>
+  <p id="descricao_produto_dois"></p>
+</div>
+</body>
+</html>
